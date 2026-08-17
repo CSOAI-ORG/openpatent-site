@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "name": "OpenPatent Agent",
+  "description": "Open patent evidence for AI innovations — prior-art anchoring and defensive publication.",
+  "url": "https://openpatent.ai",
+  "provider": {
+    "organization": "Council for the Safety of AI (CSOAI)",
+    "url": "https://csoai.org"
+  },
+  "capabilities": {
+    "streaming": false,
+    "mcp": true,
+    "a2a": true
+  },
+  "skills": [
+    {
+      "id": "record",
+      "name": "patent-disclosure-mcp.record",
+      "description": "Capture an invention disclosure with SIGIL hash-chain anchoring."
+    },
+    {
+      "id": "verify",
+      "name": "prior-art-mcp.verify",
+      "description": "Verify prior-art evidence and defensive publication status."
+    }
+  ],
+  "endpoints": {
+    "a2a": "https://openpatent.ai/a2a",
+    "mcp_catalog": "https://openpatent.ai/.well-known/mcp.json"
+  },
+  "sector": "intellectual-property"
+}

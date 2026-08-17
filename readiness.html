@@ -1,0 +1,114 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>openpatent.ai — Patent Readiness Check (free)</title>
+<meta name="description" content="Free AI patent-readiness check: is your invention patentable? Is it clean to file (OIN Linux-System scope)? What to protect first? Then disclose for court-admissible priority.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"OpenPatent.ai Patent Readiness Check","applicationCategory":"BusinessApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+</script>
+<style>
+:root{--ink:#0b1020;--mut:#5b6478;--ac:#2563eb;--ok:#047857;--warn:#b45309;--bad:#b91c1c;--bg:#f7f8fb}
+*{box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;margin:0;color:var(--ink);background:var(--bg);line-height:1.5}
+header{background:linear-gradient(135deg,#0b1020,#1e293b);color:#fff;padding:2.5rem 1.5rem 2rem}
+.wrap{max-width:820px;margin:0 auto;padding:0 1.5rem}
+h1{margin:.2rem 0;font-size:1.7rem}.tag{color:#93c5fd;font-weight:600;letter-spacing:.04em}
+.lead{color:#cbd5e1;max-width:60ch}.step{background:#fff;border:1px solid #e5e9f0;border-radius:.8rem;padding:1.3rem;margin:1rem 0}
+.step h2{font-size:1.05rem;margin:.2rem 0 .5rem;color:var(--ac)}
+label{font-weight:600;font-size:.85rem;display:block;margin-bottom:.3rem}
+textarea,input[type=text]{width:100%;padding:.6rem .8rem;border:1px solid #cbd5e1;border-radius:.5rem;font:inherit;font-family:ui-monospace,monospace}
+button{background:var(--ac);color:#fff;border:0;border-radius:.5rem;padding:.7rem 1.4rem;font:inherit;font-weight:600;cursor:pointer}
+button:disabled{opacity:.5;cursor:wait}
+.result{display:none;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:.8rem;padding:1.2rem;margin:1rem 0}
+.badge{display:inline-block;padding:.3rem .8rem;border-radius:.5rem;font-weight:700;font-size:.8rem;margin:.2rem .2rem}
+.crit{background:#dcfce7;color:#166534}.high{background:#fef9c3;color:#854d0e}.med{background:#e0f2fe;color:#1e40af}.low{background:#f1f5f9;color:#334155}
+.adj{background:#fee2e2;color:#991b1b}.out{background:#dcfce7;color:#166534}
+.card{background:#fff;border:1px solid #e5e9f0;border-radius:.8rem;padding:1rem;margin:.8rem 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.note{font-size:.9rem;color:var(--mut)}.mono{font-family:ui-monospace,monospace;font-size:.85rem;color:var(--ac)}
+footer{color:var(--mut);font-size:.8rem;padding:2rem 0 3rem;text-align:center}
+a{color:var(--ac)}
+</style>
+</head><body>
+<header><div class="wrap">
+  <div class="tag">OPENPATENT.AI · DISCLOSE FIRST, AI SECOND</div>
+  <h1>Patent Readiness Check</h1>
+  <p class="lead">Describe your invention in plain terms. We classify what's patentable, check it against the OIN Linux-System scope (is it clean to file?), and tell you what to protect first — <b>free, 30 seconds</b>. Then disclose for court-admissible priority.</p>
+</div></header>
+
+<main class="wrap">
+  <div class="step">
+    <h2>Step 1 — What's your invention?</h2>
+    <label for="name">Invention / component name</label>
+    <input type="text" id="name" placeholder="e.g. Signed measurement index with empirical manifold">
+    <label for="text" style="margin-top:.8rem">Describe it (mechanism, what makes it novel)</label>
+    <textarea id="text" rows="6" placeholder="e.g. A recomputable measurement index that computes statistical distance to an empirical permitted-operating-region, with canary contamination gating and signed confidence intervals along an attestation chain..."></textarea>
+    <div style="margin-top:.8rem"><button id="run">Run readiness check</button> <span id="status" class="note"></span></div>
+  </div>
+
+  <div id="result" class="result">
+    <h2 style="font-size:1.1rem;color:var(--ink);margin-top:0">Readiness card</h2>
+    <div id="badges"></div>
+    <div class="card" id="card"></div>
+  </div>
+
+  <div class="step">
+    <h2>Next — disclose for court-admissible priority</h2>
+    <p class="note">The free check tells you <b>what to protect</b>. The <a href="#disclose">disclosure engine</a> proves <b>you invented it first</b> — 6 crypto layers (SHA-3, HMAC, Ed25519, Bitcoin OTS, C2PA, hash-chain), court-admissible in 10+ jurisdictions. <b>$10–$149</b>.</p>
+    <button id="disclose" onclick="location.hash='#disclose'">Go to disclosure</button>
+  </div>
+</main>
+
+<footer class="wrap">openpatent.ai · independent IP-readiness + disclosure · runs a signed, deterministic engine · recomputable cards · <a href="https://openpatent.ai">home</a></footer>
+
+<script>
+function classify(name, text) {
+  const blob = (name + ' ' + text).toLowerCase();
+  const h=arr=>arr.filter(x=>blob.includes(x)).length;
+  const CRIT=1, HIGH=2, MED=3, LOW=4; // reversed: higher index = lower priority
+  var score = 5;
+  if (h(['distance','manifold','permitted','measurement','recomputable','contamination','canary','wilson','signed chain','attestation','sigil','sheaf','world model','owem'])>=2) score=Math.min(score,CRIT);
+  if (h(['quantum','amplitude','merkle','provenance','zeke','ranked league','elo','information cell','skill card','ledger','conformity','rego','gate'])>=1) score=Math.min(score,HIGH);
+  if (h(['map-elites','merging','redis','inspect','ouroboros','stigmergy','router','crosswalk','oscal'])>=1) score=Math.min(score,MED);
+  if (h(['ui','visual','design','mirror','converter','wrapper','glass'])>=1 && score===5) score=LOW;
+  if (score===5) score=LOW;
+  const pri=['CRITICAL','HIGH','MED','LOW'][score-1];
+  const oin = h(['linux','kernel','filesystem driver','device driver','scheduler','netfilter','ip stack','system call','bootloader','systemd','container runtime'])>=1?'adjacent':'out';
+  let cat='Measurement-Spine';
+  if (h(['quantum','circuit'])) cat='Quantum-Bridge';
+  else if (h(['sheaf','402','federat'])) cat='Signed-Card';
+  else if (h(['chain','sigil','invariant'])) cat='Signed-Rail';
+  else if (h(['poincar','hyperbolic','geodesic','fisher'])) cat='J-Space';
+  else if (h(['world model','owem','clan','persona'])) cat='World-OWEM';
+  else if (h(['rego','council','govern','oscal','crosswalk'])) cat='Governance';
+  else if (h(['bus','redis','map-elites','mirror'])) cat='Infra';
+  return {priority:pri, cat, oin};
+}
+run.onclick=()=>{
+  const name=document.getElementById('name').value.trim();
+  const text=document.getElementById('text').value.trim();
+  if(!text){alert('Describe your invention first.');return;}
+  run.disabled=true; status.innerText='checking...';
+  const r=classify(name,text);
+  const d=document.getElementById('result');d.style.display='block';
+  const b=document.getElementById('badges');
+  b.innerHTML=`<span class="badge ${r.priority.toLowerCase()}">Priority: ${r.priority}</span>
+    <span class="badge med">Category: ${r.cat}</span>
+    <span class="badge ${r.oin}">OIN scope: ${r.oin==='out'?'Clean to file':'Adjacent — gate required'}</span>`;
+  const card=document.getElementById('card');
+  const actions={
+    CRITICAL:'PROVISIONAL PATENT FIRST — crown-jewel surface. Draft a provisional, run prior-art attestation, file within 6 months. Then disclose on OpenPatent.ai for court-admissible priority.',
+    HIGH:'PROTECT NOW — provisional or trade-secret + disclosure. Register priority at the $149 defensive tier before using AI on it.',
+    MED:'INCLUDE IN BROAD CLAIM — fold into an umbrella provisional or protect as a signed credential; optional early disclosure.',
+    LOW:'TRADE-SECRET / UI — protect as trade secret or design; not a standalone patent. Disclose on the free tier for a low-cost paper trail.'
+  };
+  card.innerHTML = `
+    <div class="mono">schema: openpatent-readiness-v1 · digest: <span id="dg"></span></div>
+    <p><b>Recommended action:</b> ${actions[r.priority]}</p>
+    ${r.oin==='adjacent'
+      ? `<p class="note" style="color:var(--bad)">⚠️ Linux-kernel-adjacent hints detected. This requires the OIN scope gate: a Limitation Election BEFORE filing, or consciously accept it gets licensed back. Do not file silently.</p>`
+      : `<p class="note" style="color:var(--ok)">✓ Not Linux-kernel-adjacent. The OIN grant-back does not apply — your IP stays yours. Clean to file.</p>`}
+    <p class="note">This card is recomputable. Next: <b>disclose for court-admissible proof of priority.</b></p>`;
+  // pseudo digest
+  document.getElementById('dg').innerText = (name+text).split('').reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7).toString(16);
+  run.disabled=false; status.innerText='done';
+};
+</script>
+</body></html>

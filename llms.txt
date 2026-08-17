@@ -1,0 +1,22 @@
+# OpenPatent (openpatent.ai)
+
+> Open patent evidence for AI innovations — prior-art anchoring and defensive publication.
+
+Every artifact MEOK's agent hive produces is captured as a tamper-evident invention disclosure: a content fingerprint, a hash-chained cryptographic receipt, and an optional publicly-verifiable proofof.ai / csoai.org certificate.
+
+## What this is
+OpenPatent is a vertical in the CSOAI Hive — automated invention documentation with EU AI Act and AI governance attestation support, exposed as Model Context Protocol (MCP) servers callable by any AI agent.
+
+## MCP tools
+- patent-disclosure-mcp.record: Capture an invention disclosure with SIGIL hash-chain anchoring.
+- prior-art-mcp.verify: Verify prior-art evidence and defensive publication status.
+
+## Discovery
+- Agent card: https://openpatent.ai/agent.json
+- MCP catalog: https://openpatent.ai/.well-known/mcp.json
+- Sitemap: https://openpatent.ai/sitemap.xml
+- Hive registry: https://csoai.org
+
+## Trust spine
+- Sign a disclosure: https://os.meok.ai/api/sign
+- Verify any attestation: https://os.meok.ai/api/verify
